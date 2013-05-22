@@ -1,0 +1,27 @@
+{
+  "name": "Guvna",
+  "version": "0.0.1",
+  "author": {
+    "name": "Ben Bradley",
+    "url": "http://github.com/ben-bradley"
+  },
+  "description": "A simple bit of code to manage the concurrency of a function.  Very useful in limiting the number of asynch calls in a loop.",
+  "main": "./index",
+  "keywords": [
+  	"concurrency",
+  	"governer",
+  	"async",
+  	"asynch",
+  	"asynchronous"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ben-bradley/guvna"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "license": "MIT"
+}
