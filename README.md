@@ -7,15 +7,22 @@ I ran into a problem where I neede to execute a resource intensive function iter
 
 To address the problem, I wrote the Guvna to govern the volume and execution of this function.
 
+Version 0.0.2
+-------------
+Guvna now uses integer variables to track concurrency information instead of events.  I found that when I nested one guvna in another, the variable scope was lost when events were used to trigger and track concurrency.
+
+To use this version of Guvna, you'll need to call a `this.next()` when your callback function is complete to trigger the next one.  More in the examples below.
+
 Usage
 -----
-Guvna uses events to signal when your function has completed a run so you MUST include `this.emit('complete');` in your function, though if you're running an asynch function, you'll likely have to create a reference to `this` as seen in the example below.
 
-In this example, I use `setTimeout` to simulate an asynch call.  Also, you can see that I emit an arbitrary `blargh` event so you can build custom event emitters/listeners into your function.
+Since Guvna now uses integer variables to signal when your callback has completed a run, you MUST include `this.next();` in your function, though if you're running an asynch function, you'll likely have to create a reference to `this` as seen in the example below that gets tucked into the asynch function.  In the code below, I call create `self` so that I can get to the `.next()` function.
+
+In this example, I use `setTimeout` to simulate an asynch call.
 
 ```javascript
-var Guvna = require('guvna'),
-		response = [];
+var	response = [],
+		Guvna = require('guvna');
 
 var guv = new Guvna({
 	max: 2,
@@ -25,19 +32,13 @@ var guv = new Guvna({
 				self = this;
 		setTimeout(function() {
 			response.push(l.name+'-'+rand);
-			/*******IMPORTANT*******/
-			self.emit('complete');
-			/*******/IMPORTANT*******/
-			self.emit('blargh');
+			self.next(); // CHANGE FROM v0.0.1
 		}, rand);
 	},
 	done: function() { console.log(response); }
 });
 
 guv.start();
-
-// your function will also be able to emit events
-guv.on('blargh', function() { console.log('honk'); });
 ```
 
 Options
@@ -47,3 +48,10 @@ When declaring your `guv` variable, you need to pass it several options:
 * `callback`: This is the function that you want to govern.  It is passed each item from the `list`.
 * `done`: This is the function to run when all your `callback`s are complete.
 * `max`: (optional) This is an integer for how many concurrent `callback`s you want to have running.  Default = `list.length / 3`
+
+
+Versions
+--------
+
+0.0.2 - Refactored to use tracking variables as using events created unnecessary comnplexity especially when nesting guvnas.
+0.0.1 - Initial drop, used events to manage concurrency.
