@@ -9,7 +9,7 @@ function Guvna(options, callback, done) {
 	this.done = options.done;
 	
 	// assign counters
-	this.max = (options.max || Math.floor((options.list.length-1)/3));
+	this.max = (options.max && options.max < options.list.length) ? options.max : options.list.length;
 	this.started = 0;
 	this.completed = 0;
 	
