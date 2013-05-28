@@ -7,9 +7,10 @@ I ran into a problem where I neede to execute a resource intensive function iter
 
 To address the problem, I wrote the Guvna to govern the volume and execution of this function.
 
-Version 0.0.2
+Version 0.0.3
 -------------
 Guvna now uses integer variables to track concurrency information instead of events.  I found that when I nested one guvna in another, the variable scope was lost when events were used to trigger and track concurrency.
+In v0.0.3 I just tweaked the `.max` calculation so that if the specified `.max` is less than the `.list.length`, it will default to `.list.length`.
 
 To use this version of Guvna, you'll need to call a `this.next()` when your callback function is complete to trigger the next one.  More in the examples below.
 
@@ -47,7 +48,7 @@ When declaring your `guv` variable, you need to pass it several options:
 * `list`: This is a simple array.  Each item in the array is passed to the `callback` function one at a time.
 * `callback`: This is the function that you want to govern.  It is passed each item from the `list`.
 * `done`: This is the function to run when all your `callback`s are complete.
-* `max`: (optional) This is an integer for how many concurrent `callback`s you want to have running.  Default = `list.length / 3`
+* `max`: (optional) This is an integer for how many concurrent `callback`s you want to have running.  Default = `list.length`
 
 
 Versions
