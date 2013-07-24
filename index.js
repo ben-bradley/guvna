@@ -1,4 +1,4 @@
-function Guvna(options, callback, done) {
+function Guvna(options) {
 	
 	// error checking
 	if (!options.list || !options.callback || !options.done) { return false; }
