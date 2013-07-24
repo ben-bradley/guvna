@@ -1,7 +1,10 @@
 function Guvna(options) {
 	
 	// error checking
-	if (!options.list || !options.callback || !options.done) { return false; }
+	if (!options.list || !options.callback || !options.done) {
+		console.log('ERROR: missing required option - { list: [], callback: fn(), done: fn() }');
+		return false;
+	}
 	
 	// assign vars
 	this.list = options.list;
