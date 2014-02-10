@@ -15,6 +15,7 @@ function Guvna(options) {
 	this.max = (options.max && options.max < options.list.length) ? options.max : options.list.length;
 	this.started = 0;
 	this.completed = 0;
+	this.percDone = 0;
 	
 }
 
@@ -24,6 +25,7 @@ Guvna.prototype = {
 	
 	next: function() {
 		this.completed += 1;
+		this.percDone = this.completed / this.list.length;
 		if (this.list[this.started]) { this.callback(this.list[this.started++]); }
 		else if (this.completed == this.list.length) { this.done(); }
 	}

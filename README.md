@@ -7,11 +7,9 @@ I ran into a problem where I neede to execute a resource intensive function iter
 
 To address the problem, I wrote the Guvna to govern the volume and execution of this function.
 
-Version 0.0.4
+Version 0.0.5
 -------------
-Just did some minor code cleanup and added error handling output.
-
-To use this version of Guvna, you'll need to call a `this.next()` in your callback function when it's complete to trigger the next one.  More in the examples below.
+Added the `this.percDone` metric to make it easy to show the percentage done in the callback.
 
 Usage
 -----
@@ -32,6 +30,7 @@ var guv = new Guvna({
 				self = this;
 		setTimeout(function() {
 			response.push(l.name+'-'+rand);
+			console.log(parseInt(self.percDone*100)+'% complete');
 			self.next(); // CHANGE FROM v0.0.1
 		}, rand);
 	},
@@ -52,6 +51,8 @@ When declaring your `guv` variable, you need to pass it several options:
 
 Versions
 --------
+* 0.0.5 - Added `percDone` metric.
+* 0.0.4 - Added error handling.
 * 0.0.3 - Tweaked calculation of `max` if it's omitted.
 * 0.0.2 - Refactored to use tracking variables as using events created unnecessary comnplexity especially when nesting guvnas.
 * 0.0.1 - Initial drop, used events to manage concurrency.
