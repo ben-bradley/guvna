@@ -1,6 +1,5 @@
 Guvna
 =====
-
 Guvna allows for easily managing the number of times a function is run concurrently.
 
 I ran into a problem where I neede to execute a resource intensive function iteratively and quickly killed the box.
@@ -13,7 +12,6 @@ Added the `this.percDone` metric to make it easy to show the percentage done in 
 
 Usage
 -----
-
 Since Guvna now uses integer variables to signal when your callback has completed a run, you MUST include `this.next();` in your function, though if you're running an asynch function, you'll likely have to create a reference to `this` as seen in the example below that gets tucked into the asynch function.  In the code below, I call create `self` so that I can get to the `.next()` function.
 
 In this example, I use `setTimeout` to simulate an asynch call.
